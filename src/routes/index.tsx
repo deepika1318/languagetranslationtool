@@ -10,6 +10,7 @@ import {
   Languages,
   Sparkles,
   X,
+  Wand2,
 } from "lucide-react";
 import { translateText } from "@/lib/translate.functions";
 
@@ -76,16 +77,28 @@ const LANGUAGES: { code: string; name: string; speech: string }[] = [
   { code: "sv", name: "Swedish", speech: "sv-SE" },
 ];
 
+const EXAMPLES = [
+  "Hello! How are you today? I hope you are having a wonderful day.",
+  "The quick brown fox jumps over the lazy dog near the river bank.",
+  "Knowledge is power, and language is the key that unlocks it.",
+  "Where is the nearest train station? I would like to buy two tickets, please.",
+];
+
 const MAX_CHARS = 5000;
 
 function speechCode(code: string) {
   return LANGUAGES.find((l) => l.code === code)?.speech || "en-US";
 }
 
+function wordCount(text: string) {
+  const t = text.trim();
+  return t ? t.split(/\s+/).length : 0;
+}
+
 function TranslatorPage() {
   const runTranslate = useServerFn(translateText);
   const [sourceLang, setSourceLang] = useState("auto");
-  const [targetLang, setTargetLang] = useState("es");
+  const [targetLang, setTargetLang] = useState("hi");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -142,11 +155,17 @@ function TranslatorPage() {
     window.speechSynthesis.speak(utterance);
   };
 
+  const loadExample = () => {
+    const pick = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)] ?? EXAMPLES[0] ?? "";
+    setInput(pick);
+    setOutput("");
+  };
+
   return (
     <div className="bg-app flex min-h-screen flex-col">
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-border bg-card/80 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4">
-          <div className="bg-button-primary flex h-9 w-9 items-center justify-center rounded-lg text-primary-foreground shadow-md">
+          <div className="bg-button-primary flex h-9 w-9 items-center justify-center rounded-lg text-primary-foreground">
             <Languages className="h-5 w-5" />
           </div>
           <div>
@@ -166,7 +185,7 @@ function TranslatorPage() {
           <select
             value={sourceLang}
             onChange={(e) => setSourceLang(e.target.value)}
-            className="h-11 flex-1 rounded-lg border border-input bg-card px-3 text-sm font-medium text-foreground shadow-sm outline-none focus:ring-2 focus:ring-ring"
+            className="h-11 flex-1 rounded-lg border border-input bg-card px-3 text-sm font-medium text-foreground shadow-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
           >
             {LANGUAGES.map((l) => (
               <option key={l.code} value={l.code}>
@@ -179,7 +198,7 @@ function TranslatorPage() {
             onClick={swap}
             disabled={sourceLang === "auto"}
             title="Swap languages"
-            className="mx-auto flex h-11 w-11 items-center justify-center rounded-lg border border-input bg-card text-foreground shadow-sm transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-40"
+            className="mx-auto flex h-11 w-11 items-center justify-center rounded-lg border border-input bg-card text-primary shadow-sm transition-all hover:border-primary hover:bg-accent disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ArrowLeftRight className="h-4 w-4" />
           </button>
@@ -187,7 +206,7 @@ function TranslatorPage() {
           <select
             value={targetLang}
             onChange={(e) => setTargetLang(e.target.value)}
-            className="h-11 flex-1 rounded-lg border border-input bg-card px-3 text-sm font-medium text-foreground shadow-sm outline-none focus:ring-2 focus:ring-ring"
+            className="h-11 flex-1 rounded-lg border border-input bg-card px-3 text-sm font-medium text-foreground shadow-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
           >
             {LANGUAGES.filter((l) => l.code !== "auto").map((l) => (
               <option key={l.code} value={l.code}>
@@ -200,22 +219,31 @@ function TranslatorPage() {
         {/* Panels */}
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {/* Input */}
-          <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-md">
+          <div className="panel-glow flex flex-col overflow-hidden rounded-xl bg-card">
             <div className="panel-header">
               <Languages className="h-3.5 w-3.5 text-primary" />
               <span className="panel-label">Text to translate</span>
-              {input && (
+              <div className="ml-auto flex items-center gap-1">
                 <button
-                  onClick={() => {
-                    setInput("");
-                    setOutput("");
-                  }}
-                  title="Clear"
-                  className="ml-auto rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                  onClick={loadExample}
+                  title="Try an example"
+                  className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
                 >
-                  <X className="h-4 w-4" />
+                  <Wand2 className="h-4 w-4" />
                 </button>
-              )}
+                {input && (
+                  <button
+                    onClick={() => {
+                      setInput("");
+                      setOutput("");
+                    }}
+                    title="Clear"
+                    className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
             <textarea
               value={input}
@@ -226,7 +254,10 @@ function TranslatorPage() {
               placeholder="Enter text to translate…"
               className="min-h-56 w-full flex-1 resize-none bg-transparent p-4 text-base text-foreground outline-none placeholder:text-muted-foreground"
             />
-            <div className="flex items-center justify-end border-t border-border px-3 py-2">
+            <div className="flex items-center justify-end gap-3 border-t border-border px-3 py-2">
+              <span className="text-xs text-muted-foreground">
+                {wordCount(input)} words
+              </span>
               <span className="text-xs text-muted-foreground">
                 {input.length} / {MAX_CHARS}
               </span>
@@ -234,15 +265,20 @@ function TranslatorPage() {
           </div>
 
           {/* Output */}
-          <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-md">
+          <div className="panel-glow flex flex-col overflow-hidden rounded-xl bg-card">
             <div className="panel-header">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
               <span className="panel-label">Translation</span>
+              {output && (
+                <span className="ml-auto rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                  {langName(targetLang)}
+                </span>
+              )}
             </div>
             <div className="min-h-56 flex-1 overflow-y-auto p-4">
               {loading ? (
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
                   <span className="text-sm">Translating…</span>
                 </div>
               ) : error ? (
@@ -260,7 +296,7 @@ function TranslatorPage() {
                 onClick={copyOutput}
                 disabled={!output}
                 title="Copy translation"
-                className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-40"
+                className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-primary disabled:opacity-40"
               >
                 {copied ? (
                   <Check className="h-4 w-4 text-primary" />
@@ -272,10 +308,15 @@ function TranslatorPage() {
                 onClick={speak}
                 disabled={!output || speaking}
                 title="Listen"
-                className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-40"
+                className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-primary disabled:opacity-40"
               >
                 <Volume2 className={`h-4 w-4 ${speaking ? "animate-pulse text-primary" : ""}`} />
               </button>
+              {output && (
+                <span className="ml-auto text-xs text-muted-foreground">
+                  {wordCount(output)} words
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -283,7 +324,7 @@ function TranslatorPage() {
         <button
           onClick={() => doTranslate()}
           disabled={loading || !input.trim()}
-          className="bg-button-primary mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-semibold text-primary-foreground shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-button-primary mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold tracking-wide text-primary-foreground uppercase disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <>
