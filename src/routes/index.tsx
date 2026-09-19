@@ -53,6 +53,16 @@ const LANGUAGES: { code: string; name: string; speech: string }[] = [
   { code: "ta", name: "Tamil", speech: "ta-IN" },
   { code: "te", name: "Telugu", speech: "te-IN" },
   { code: "mr", name: "Marathi", speech: "mr-IN" },
+  { code: "gu", name: "Gujarati", speech: "gu-IN" },
+  { code: "kn", name: "Kannada", speech: "kn-IN" },
+  { code: "ml", name: "Malayalam", speech: "ml-IN" },
+  { code: "pa", name: "Punjabi", speech: "pa-IN" },
+  { code: "ur", name: "Urdu", speech: "ur-IN" },
+  { code: "or", name: "Odia", speech: "or-IN" },
+  { code: "as", name: "Assamese", speech: "as-IN" },
+  { code: "ne", name: "Nepali", speech: "ne-NP" },
+  { code: "sa", name: "Sanskrit", speech: "sa-IN" },
+  { code: "sd", name: "Sindhi", speech: "sd-IN" },
   { code: "zh", name: "Chinese (Simplified)", speech: "zh-CN" },
   { code: "ja", name: "Japanese", speech: "ja-JP" },
   { code: "ko", name: "Korean", speech: "ko-KR" },
@@ -132,14 +142,14 @@ function TranslatorPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <header className="border-b border-border">
+    <div className="bg-festive flex min-h-screen flex-col">
+      <header className="border-b border-border/60">
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <div className="bg-button-festive flex h-9 w-9 items-center justify-center rounded-lg text-primary-foreground shadow-md">
             <Languages className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-lg font-semibold tracking-tight text-foreground">
+            <h1 className="text-gradient-festive text-lg font-bold tracking-tight">
               Polyglot
             </h1>
             <p className="text-xs text-muted-foreground">
@@ -266,7 +276,7 @@ function TranslatorPage() {
         <button
           onClick={() => doTranslate()}
           disabled={loading || !input.trim()}
-          className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-button-festive mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-semibold text-primary-foreground shadow-md disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <>
@@ -278,7 +288,7 @@ function TranslatorPage() {
         </button>
 
         <p className="mt-3 text-center text-xs text-muted-foreground">
-          Tip: press Ctrl+Enter (Cmd+Enter on Mac) to translate. Supports 28 languages.
+          Tip: press Ctrl+Enter (Cmd+Enter on Mac) to translate. Supports 38 languages, including 15 from India.
         </p>
       </main>
     </div>
