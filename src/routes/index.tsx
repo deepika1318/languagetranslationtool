@@ -283,7 +283,7 @@ function TranslatorPage() {
         <button
           onClick={() => doTranslate()}
           disabled={loading || !input.trim()}
-          className="bg-button-festive mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-semibold text-primary-foreground shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-button-primary mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-semibold text-primary-foreground shadow-md disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <>
