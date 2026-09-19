@@ -336,7 +336,7 @@ function TranslatorPage() {
         </button>
 
         <p className="mt-3 text-center text-xs text-muted-foreground">
-          Tip: press Ctrl+Enter (Cmd+Enter on Mac) to translate. Supports 38 languages, including 15 from India.
+          Tip: press Ctrl+Enter (Cmd+Enter on Mac) to translate. Supports 40 languages, including 15 from India.
         </p>
       </main>
     </div>
