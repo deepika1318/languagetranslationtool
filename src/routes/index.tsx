@@ -156,7 +156,7 @@ function TranslatorPage() {
   };
 
   const loadExample = () => {
-    const pick = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+    const pick = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)] ?? EXAMPLES[0] ?? "";
     setInput(pick);
     setOutput("");
   };
