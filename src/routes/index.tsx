@@ -8,6 +8,7 @@ import {
   Volume2,
   Loader2,
   Languages,
+  Sparkles,
   X,
 } from "lucide-react";
 import { translateText } from "@/lib/translate.functions";
@@ -142,14 +143,14 @@ function TranslatorPage() {
   };
 
   return (
-    <div className="bg-festive flex min-h-screen flex-col">
-      <header className="border-b border-border/60">
+    <div className="bg-app flex min-h-screen flex-col">
+      <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4">
-          <div className="bg-button-festive flex h-9 w-9 items-center justify-center rounded-lg text-primary-foreground shadow-md">
+          <div className="bg-button-primary flex h-9 w-9 items-center justify-center rounded-lg text-primary-foreground shadow-md">
             <Languages className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-gradient-festive text-lg font-bold tracking-tight">
+            <h1 className="text-gradient-brand text-lg font-bold tracking-tight">
               Polyglot
             </h1>
             <p className="text-xs text-muted-foreground">
@@ -199,7 +200,23 @@ function TranslatorPage() {
         {/* Panels */}
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {/* Input */}
-          <div className="flex flex-col rounded-xl border border-border bg-card shadow-sm">
+          <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-md">
+            <div className="panel-header">
+              <Languages className="h-3.5 w-3.5 text-primary" />
+              <span className="panel-label">Text to translate</span>
+              {input && (
+                <button
+                  onClick={() => {
+                    setInput("");
+                    setOutput("");
+                  }}
+                  title="Clear"
+                  className="ml-auto rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value.slice(0, MAX_CHARS))}
@@ -207,23 +224,9 @@ function TranslatorPage() {
                 if ((e.metaKey || e.ctrlKey) && e.key === "Enter") doTranslate();
               }}
               placeholder="Enter text to translate…"
-              className="min-h-56 w-full flex-1 resize-none rounded-t-xl bg-transparent p-4 text-base text-foreground outline-none placeholder:text-muted-foreground"
+              className="min-h-56 w-full flex-1 resize-none bg-transparent p-4 text-base text-foreground outline-none placeholder:text-muted-foreground"
             />
-            <div className="flex items-center justify-between border-t border-border px-3 py-2">
-              <div className="flex items-center gap-1">
-                {input && (
-                  <button
-                    onClick={() => {
-                      setInput("");
-                      setOutput("");
-                    }}
-                    title="Clear"
-                    className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
+            <div className="flex items-center justify-end border-t border-border px-3 py-2">
               <span className="text-xs text-muted-foreground">
                 {input.length} / {MAX_CHARS}
               </span>
@@ -231,8 +234,12 @@ function TranslatorPage() {
           </div>
 
           {/* Output */}
-          <div className="flex flex-col rounded-xl border border-border bg-card shadow-sm">
-            <div className="min-h-56 flex-1 overflow-y-auto rounded-t-xl p-4">
+          <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-md">
+            <div className="panel-header">
+              <Sparkles className="h-3.5 w-3.5 text-primary" />
+              <span className="panel-label">Translation</span>
+            </div>
+            <div className="min-h-56 flex-1 overflow-y-auto p-4">
               {loading ? (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Loader2 className="h-4 w-4 animate-spin" />
