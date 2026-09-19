@@ -142,3 +142,35 @@
     color: var(--color-foreground);
   }
 }
+
+@layer utilities {
+  .bg-festive {
+    background:
+      radial-gradient(60rem 30rem at 10% -10%, oklch(0.85 0.13 80 / 0.55), transparent 60%),
+      radial-gradient(50rem 28rem at 95% 0%, oklch(0.85 0.1 175 / 0.5), transparent 60%),
+      radial-gradient(45rem 30rem at 50% 115%, oklch(0.88 0.09 40 / 0.45), transparent 60%),
+      var(--color-background);
+  }
+
+  .bg-button-festive {
+    background-image: linear-gradient(
+      100deg,
+      oklch(0.7 0.2 48),
+      oklch(0.65 0.19 30) 45%,
+      oklch(0.62 0.16 175)
+    );
+    background-size: 150% 100%;
+    transition: background-position 0.5s ease;
+  }
+
+  .bg-button-festive:hover:not(:disabled) {
+    background-position: 100% 0;
+  }
+
+  .text-gradient-festive {
+    background-image: linear-gradient(95deg, oklch(0.62 0.2 45), oklch(0.58 0.16 175));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
