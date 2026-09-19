@@ -144,33 +144,44 @@
 }
 
 @layer utilities {
-  .bg-festive {
+  .bg-app {
     background:
-      radial-gradient(60rem 30rem at 10% -10%, oklch(0.85 0.13 80 / 0.55), transparent 60%),
-      radial-gradient(50rem 28rem at 95% 0%, oklch(0.85 0.1 175 / 0.5), transparent 60%),
-      radial-gradient(45rem 30rem at 50% 115%, oklch(0.88 0.09 40 / 0.45), transparent 60%),
+      linear-gradient(180deg, oklch(0.94 0.02 258 / 0.6), transparent 18rem),
       var(--color-background);
   }
 
-  .bg-button-festive {
-    background-image: linear-gradient(
-      100deg,
-      oklch(0.7 0.2 48),
-      oklch(0.65 0.19 30) 45%,
-      oklch(0.62 0.16 175)
-    );
+  .bg-button-primary {
+    background-image: linear-gradient(100deg, oklch(0.42 0.13 260), oklch(0.5 0.14 262));
     background-size: 150% 100%;
-    transition: background-position 0.5s ease;
+    transition: background-position 0.4s ease;
   }
 
-  .bg-button-festive:hover:not(:disabled) {
+  .bg-button-primary:hover:not(:disabled) {
     background-position: 100% 0;
   }
 
-  .text-gradient-festive {
-    background-image: linear-gradient(95deg, oklch(0.62 0.2 45), oklch(0.58 0.16 175));
+  .text-gradient-brand {
+    background-image: linear-gradient(95deg, oklch(0.36 0.11 260), oklch(0.5 0.14 262));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.625rem 1rem;
+    background: var(--color-muted);
+    border-radius: calc(var(--radius-xl) - 1px) calc(var(--radius-xl) - 1px) 0 0;
+  }
+
+  .panel-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
   }
 }
