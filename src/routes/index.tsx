@@ -17,13 +17,13 @@ import { translateText } from "@/lib/translate.functions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Polyglot — Instant Language Translator" },
+      { title: "Language Translation Tool — Instant AI Translator" },
       {
         name: "description",
         content:
           "Translate text between dozens of languages instantly. Type or paste text, pick a language, and get an accurate translation with copy and text-to-speech.",
       },
-      { property: "og:title", content: "Polyglot — Instant Language Translator" },
+      { property: "og:title", content: "Language Translation Tool — Instant AI Translator" },
       {
         property: "og:description",
         content:
@@ -170,7 +170,7 @@ function TranslatorPage() {
           </div>
           <div>
             <h1 className="text-gradient-brand text-lg font-bold tracking-tight">
-              Polyglot
+              Language Translation Tool
             </h1>
             <p className="text-xs text-muted-foreground">
               Instant AI-powered translation
